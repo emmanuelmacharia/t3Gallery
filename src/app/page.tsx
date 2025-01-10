@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next"
+import { db } from "~/server/db";
 
 const mockUrls = [
   "https://gmhd64et5c.ufs.sh/f/Q695QrPnWHBTafLdkNyiJ76T2F0IoCV4P3tlbfjHcwyMzrXv",
@@ -15,7 +16,12 @@ const mockImages = mockUrls.map((url, index) =>( {
     url
 }));
 
-export default function HomePage() {
+export default async function HomePage() {
+
+  const posts = await db.query.posts.findFirst();
+  
+  console.log(posts);
+
   return (
     <main>
       <div className="flex flex-wrap gap-4">
@@ -26,7 +32,9 @@ export default function HomePage() {
         ))
         }
       </div>
-     Hello (gallery in progress)
+    <div className="w-fit">
+      { posts?.name}
+    </div>
     </main>
   );
 }
