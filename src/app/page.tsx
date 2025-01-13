@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next"
 import { db } from "~/server/db";
 
-export const dynamic = "force dynamic";
+export const dynamic = "force-dynamic";
 
 
 export default async function HomePage() {
