@@ -40,7 +40,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] Add authentication
 - [x] Add image upload
 - [ ] "taint" (server only)
-- [ ] Use Next/Image component
+- [x] Use Next/Image component
 - [ ] Error Management (w/ sentry)
 - [ ] Routing/Image page (parallel route)
 - [ ] Delete button (w/ server actions)
