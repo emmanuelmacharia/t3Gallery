@@ -39,6 +39,8 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] Attach database to UI
 - [x] Add authentication
 - [ ] Add image upload
+- [ ] "taint" (server only)
+- [ ] Use Next/Image component
 - [ ] Error Management (w/ sentry)
 - [ ] Routing/Image page (parallel route)
 - [ ] Delete button (w/ server actions)
