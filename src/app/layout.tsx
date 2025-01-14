@@ -7,6 +7,7 @@ import { TopNav } from "./_components/TopNav";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "T# Gallery",
@@ -41,7 +42,7 @@ export default function RootLayout({
               {modal}
             </div>
             <div id="modal-root"></div>
-            {/* <Toaster /> */}
+            <Toaster />
           </body>
         </html>
     </ClerkProvider>

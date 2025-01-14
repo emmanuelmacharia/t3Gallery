@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadThing";
+import { toast } from "sonner"
+
 
 // import { toast } from "sonner";
 // import { usePostHog } from "posthog-js/react";
@@ -75,8 +77,25 @@ function LoadingSpinnerSVG() {
 export function SimpleUploadButton() {
   const router = useRouter();
   const {inputProps} = useUploadThingInputProps("imageUploader", {
-    onClientUploadComplete: () => router.refresh()
-  });
+    onUploadBegin() {
+      toast(
+        <div className="flex items-center gap-2 text-white bg-slate-700">Uploading...</div>, {
+          duration: 100000,
+          id: "upload-begin"
+        }
+      )
+    },
+    onClientUploadComplete: () => {
+      toast.dismiss("upload-begin");
+      router.refresh()
+      toast(
+        <div className="flex items-center gap-2 text-white bg-slate-700">Upload Complete</div>, {
+          duration: 100000,
+          id: "upload-complete"
+        }
+      )
+    },
+    });
   // const posthog = usePostHog();
 
   // const { inputProps } = useUploadThingInputProps("imageUploader", {
