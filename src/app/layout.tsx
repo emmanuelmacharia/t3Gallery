@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 import "@uploadthing/react/styles.css";
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TopNav } from "./_components/TopNav";
@@ -14,13 +14,18 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
 export default function RootLayout({
   children, modal
 }: Readonly<{ children: React.ReactNode, modal: React.ReactNode }>) {
   return (
     <ClerkProvider>
-    <html lang="en" className={`${GeistSans.variable}`}>
-    <NextSSRPlugin
+       <html lang="en">
+          <NextSSRPlugin
             /**
              * The `extractRouterConfig` will extract **only** the route configs
              * from the router to prevent additional information from being
@@ -29,13 +34,16 @@ export default function RootLayout({
              */
             routerConfig={extractRouterConfig(ourFileRouter)}
           />
-      <body className="flex flex-col gap-5">
-        <TopNav />
-        {children}
-        { modal }
-        <div id="modal-root"></div>
-        </body>
-    </html>
+          <body className={`font-sans ${inter.variable} dark`}>
+            <div className="grid h-screen grid-rows-[auto,1fr]">
+              <TopNav />
+              <main className="overflow-y-scroll">{children}</main>
+              {modal}
+            </div>
+            <div id="modal-root"></div>
+            {/* <Toaster /> */}
+          </body>
+        </html>
     </ClerkProvider>
   );
 }
