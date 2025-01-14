@@ -79,7 +79,9 @@ export function SimpleUploadButton() {
   const {inputProps} = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
       toast(
-        <div className="flex items-center gap-2 text-white bg-slate-700">Uploading...</div>, {
+        <div className="flex items-center gap-2 ">
+          <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
+        </div>, {
           duration: 100000,
           id: "upload-begin"
         }
@@ -89,7 +91,7 @@ export function SimpleUploadButton() {
       toast.dismiss("upload-begin");
       router.refresh()
       toast(
-        <div className="flex items-center gap-2 text-white bg-slate-700">Upload Complete</div>, {
+        <div className="flex items-center gap-2">Upload Complete</div>, {
           duration: 100000,
           id: "upload-complete"
         }
