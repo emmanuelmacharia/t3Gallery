@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
@@ -31,6 +31,13 @@ export const ourFileRouter = {
       // If you throw, the user will not be able to upload
       // eslint-disable-next-line @typescript-eslint/only-throw-error
       if (!user.userId) throw new UploadThingError("Unauthorized");
+
+      const fullUserData = (await clerkClient()).users.getUser(user.userId);
+
+      if ((await fullUserData)?.privateMetadata?.["can-upload"] !== true) {
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        throw new UploadThingError({message: "Forbidden", code: "FORBIDDEN"});
+      }
 
       const { success } = await ratelimit.limit(user.userId);
 
