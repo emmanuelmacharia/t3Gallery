@@ -45,6 +45,6 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 - [x] Routing/Image page (parallel route)
 - [x] set up shadui & toast
 - [x] Update the upload button to be less cringe
-- [ ] Analytics (posthog
-- [ ] Delete button (w/ server actions)
-- [ ] Ratelimiting (upstash))
+- [x] Analytics (posthog
+- [x] Delete button (w/ server actions)
+- [x] Ratelimiting (upstash))
