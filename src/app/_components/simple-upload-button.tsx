@@ -82,7 +82,7 @@ export function SimpleUploadButton() {
         <div className="flex items-center gap-2 ">
           <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
         </div>, {
-          duration: 100000,
+          duration: 10000,
           id: "upload-begin",
           style: { backgroundColor: '#333', color: '#fff' } 
         }
@@ -103,6 +103,12 @@ export function SimpleUploadButton() {
       )
       router.refresh()
     },
+
+    onUploadError(error) {
+      toast.dismiss("upload-begin");
+      posthog.capture("upload failed", { error });
+      toast.error("Upload failed")
+    }
     });
 
   return (
