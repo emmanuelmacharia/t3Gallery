@@ -17,7 +17,7 @@ if (typeof window !== 'undefined') {
 export function CSPostHogProvider({ children } : { children: React.ReactNode}) {
     return (
     <PostHogProvider client={posthog}>
-        <PostHogAuthWrapper> {children}</PostHogAuthWrapper>
+        <PostHogAuthWrapper>{children}</PostHogAuthWrapper>
     </PostHogProvider>)
 }
 
@@ -37,5 +37,5 @@ function PostHogAuthWrapper({ children } : { children: React.ReactNode} ) {
         }
     }, [auth, userInfo])
 
-    return children
+    return children;
 }
