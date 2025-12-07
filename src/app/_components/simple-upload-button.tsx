@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "~/utils/uploadThing";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 import { usePostHog } from "posthog-js/react";
 
@@ -75,41 +75,42 @@ function LoadingSpinnerSVG() {
 export function SimpleUploadButton() {
   const router = useRouter();
   const posthog = usePostHog();
-  const {inputProps} = useUploadThingInputProps("imageUploader", {
+  const { inputProps } = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
-      posthog.capture('Upload has begun');
+      posthog.capture("Upload has begun");
       toast(
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2">
           <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
-        </div>, {
+        </div>,
+        {
           duration: 10000,
           id: "upload-begin",
-          style: { backgroundColor: '#333', color: '#fff' } 
-        }
-      )
-
+          style: { backgroundColor: "#333", color: "#fff" },
+        },
+      );
     },
     onClientUploadComplete: () => {
       toast.dismiss("upload-begin");
-      posthog.capture('Upload has completed');
+      posthog.capture("Upload has completed");
       toast(
         <div className="flex items-center gap-2">
           <span className="text-lg">Upload Complete</span>
-        </div>, {
+        </div>,
+        {
           duration: 100000,
           id: "upload-complete",
-          style: { backgroundColor: '#333', color: '#fff' } 
-        }
-      )
-      router.refresh()
+          style: { backgroundColor: "#333", color: "#fff" },
+        },
+      );
+      router.refresh();
     },
 
     onUploadError(error) {
       toast.dismiss("upload-begin");
       posthog.capture("upload failed", { error });
-      toast.error("Upload failed")
-    }
-    });
+      toast.error("Upload failed");
+    },
+  });
 
   return (
     <div>

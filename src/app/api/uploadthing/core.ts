@@ -9,7 +9,6 @@ import { ratelimit } from "~/server/ratelimit";
 
 const f = createUploadthing();
 
-
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
@@ -19,7 +18,11 @@ export const ourFileRouter = {
        * For full list of options and defaults, see the File Route API reference
        * @see https://docs.uploadthing.com/file-routes#route-config
        */
-      maxFileSize: "4MB",
+      maxFileSize: "512MB",
+      maxFileCount: 20,
+    },
+    video: {
+      maxFileSize: "1GB",
       maxFileCount: 20,
     },
   })
@@ -36,13 +39,17 @@ export const ourFileRouter = {
 
       if ((await fullUserData)?.privateMetadata?.["can-upload"] !== true) {
         // eslint-disable-next-line @typescript-eslint/only-throw-error
-        throw new UploadThingError({message: "Forbidden", code: "FORBIDDEN"});
+        throw new UploadThingError({ message: "Forbidden", code: "FORBIDDEN" });
       }
 
       const { success } = await ratelimit.limit(user.userId);
 
       // eslint-disable-next-line @typescript-eslint/only-throw-error
-      if (!success) throw new UploadThingError({ message: "Ratelimited", code: "BAD_REQUEST" });
+      if (!success)
+        throw new UploadThingError({
+          message: "Ratelimited",
+          code: "BAD_REQUEST",
+        });
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId };
@@ -52,9 +59,9 @@ export const ourFileRouter = {
 
       await db.insert(images).values({
         name: file.name,
-        url: file.url, 
-        userId: metadata.userId
-      })
+        url: file.url,
+        userId: metadata.userId,
+      });
       console.log("Upload complete for userId:", metadata.userId);
 
       console.log("file url", file.url);
